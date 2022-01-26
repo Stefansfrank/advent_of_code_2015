@@ -1,23 +1,27 @@
 package com.sf.aoc2015
 
-import java.lang.Integer.min
-import java.lang.Integer.max
+import kotlin.math.max
+import kotlin.math.min
 
+// a point with coordinates c and y
 data class XY(val x: Int, val y: Int) {
 
-    private val delX = listOf(0,1,0,-1)
-    private val delY = listOf(-1,0,1,0)
-
+    // adds a vector to a point
     fun add(p:XY) = XY(x + p.x, y + p.y)
 
+    // returns the next point in the given direction
+    // (0 = up, 1 = right, 2 = down, 3 = left)
+    private val delX = listOf(0, 1, 0, -1)
+    private val delY = listOf(-1, 0, 1, 0)
     fun mv(dir: Int) = XY( x + delX[dir], y + delY[dir])
 }
 
+// a rectangle defined with the corner points
 data class Rect(val from:XY, val to:XY) {
 
+    // range functions for either direction enforcing from < to
     fun xRange() = (min(from.x, to.x) .. max(from.x, to.x))
     fun yRange() = (min(from.y, to.y) .. max(from.y, to.y))
-
 }
 
 // a 2d mutable list of Booleans of dimensions xDim, yDim

@@ -36,7 +36,7 @@ class Day14 : Solver {
 
         // simple use of the Ren.distAfter(time)
         val ren1 = rens.maxByOrNull { it.distAfter(cut) }!!
-        println("\n$bold${ren1.name.uppercase()} is in front after "
+        println("\n$bold${ren1.name.uppercase()}$reset is in front after "
                     + "$cut seconds at km $red$bold${ren1.distAfter(cut)}$reset")
 
         // instead of an evolutionary simulation of the race, the O(1) time dependency of Ren.distAfter(time)
@@ -44,7 +44,7 @@ class Day14 : Solver {
         // both parts together run under 400 ms on my MB Pro 2019
         for (time in 1..cut) rens.maxByOrNull { it.distAfter(time) }!!.points += 1
         val ren2 = rens.maxByOrNull { it.points }!!
-        println("$bold${ren2.name.uppercase()} has led $red$bold${ren2.points}$reset seconds of that race " +
+        println("$bold${ren2.name.uppercase()}$reset has led $red$bold${ren2.points}$reset seconds of that race " +
                     "- more than any other reindeer")
     }
 }
