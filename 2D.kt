@@ -14,6 +14,18 @@ data class XY(val x: Int, val y: Int) {
     private val delX = listOf(0, 1, 0, -1)
     private val delY = listOf(-1, 0, 1, 0)
     fun mv(dir: Int) = XY( x + delX[dir], y + delY[dir])
+
+    // returns the 4 or 8 neighbours depending on the flag 'diagonal'
+    fun neighbors(diagonal: Boolean):List<XY> {
+        var delX = listOf(0, 1, 0, -1)
+        var delY = listOf(-1, 0, 1, 0)
+        if (diagonal) {
+            delX = listOf(0, 1, 1, 1, 0, -1, -1, -1)
+            delY = listOf(-1, -1, 0, 1, 1, 1, 0, -1)
+        }
+        var i = 0
+        return List(if (diagonal) 8 else 4) { XY(x + delX[i], y + delY[i++]) }
+    }
 }
 
 // a rectangle defined with the corner points
@@ -54,6 +66,16 @@ class Mask(val xdim:Int, val ydim:Int, private val default:Boolean = false) {
 
     // counts the amount of 'true' in the map
     fun cnt() = msk.fold(0) { acc, ln -> acc + ln.fold(0) { acc2, flg -> acc2 + if (flg) 1 else 0 } }
+
+    // prints out a representation to stdout
+    fun print() = msk.forEach { it.forEach{ b -> if (b) print("#") else print(".") }; println() }
+
+    // returns a snapshot of the inner mask
+    fun snap():List<List<Boolean>> {
+        val nMsk = mutableListOf<List<Boolean>>()
+        for (ln in msk) nMsk.add( ln.map{ it } )
+        return nMsk
+    }
 }
 
 // a 2D integer map of dimensions xdim, ydim
