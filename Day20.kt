@@ -17,19 +17,13 @@ class Day20 : Solver {
         return num * 10
     }
 
-    // part 2 packet counter benefits from the fact that I always compute
-    // both factors, so I can limit the first factor to 50 and count the second factor
-    // could be faster for numbers over 2500 by removing two more checks and hardcode the limit to 50
-    // but it's already super fast
+    // part 2 packet counter can be streamlined from the above as we only count
+    // factors where the second factor is <= 50, so we can stop at 50 for one factor
+    // for large numbers and also omit the double counting check for large numbers
+    // NOTE: this works only correctly for numbers over 2500!!
     private fun packets2(house: Int):Int {
-        val lmt = min(sqrt(house.toDouble()).toInt(), 50)
         var num = 1 + house
-        for (i in 2..lmt) if (house % i == 0) {
-            val i2 = house/i
-            num += i2
-            if (i2 <= 50) num += i
-        }
-        if (lmt * lmt == house) num -= lmt
+        for (i in 2..50) if (house % i == 0) num += house/i
         return num * 11
     }
 
@@ -44,7 +38,7 @@ class Day20 : Solver {
 
         // Part 2
         numP = 0
-        house = 100
+        house = 2500 // the optimized package counter works correctly only for n > 2500
         while (numP < 36_000_000) // my puzzle input
             numP = packets2(++house)
         println("With a 50 houses limit, $numP packages get to house $red$bold$house$reset")
