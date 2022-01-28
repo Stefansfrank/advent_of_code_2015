@@ -1,14 +1,16 @@
 package com.sf.aoc2015
 
-import kotlin.math.min
 import kotlin.math.sqrt
 
 class Day20 : Solver {
+    // NOTE: I added a more sophisticated version of part 1 as Day20b.kt in this repo (most code actually in Int.kt)
+    // using prime factorization with Atkin's sieve and computing the divisors from the prime factorials.
+    // However, the overheads there adds up to a total runtime that is similar to this brut force approach here
+    // and part 2 is much easier to make super fast in the brut force algorithm below. Thus, I did not implement
+    // part 2 in the alternative version, but it's fun to compare the two
 
-    // the part 1 packets count is a regular brut force divisor search
-    // using the square root limit counting two factors at once
-    // an optimization would be to use prime number factoring to determine
-    // divisors but this was fast enough - maybe I'll get to it one of these days
+    // The part 1 packets count is a regular brut force divisor search
+    // using the square root limit as an optimization counting two factors at once.
     private fun packets(house: Int):Int {
         val lmt = sqrt(house.toDouble()).toInt()
         var num = 1 + house
@@ -18,8 +20,8 @@ class Day20 : Solver {
     }
 
     // part 2 packet counter can be streamlined from the above as we only count
-    // factors where the second factor is <= 50, so we can stop at 50 for one factor
-    // for large numbers and also omit the double counting check for large numbers
+    // factors where the second factor is <= 50, so we can stop at 50 for the first factor
+    // (for large numbers) and also omit the double counting check (for large numbers)
     // NOTE: this works only correctly for numbers over 2500!!
     private fun packets2(house: Int):Int {
         var num = 1 + house
