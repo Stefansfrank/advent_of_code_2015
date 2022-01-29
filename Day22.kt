@@ -91,7 +91,8 @@ class Day22 : Solver {
                 // try all spells by creating copies of the current state
                 for (spell in 0..4) {
                     val nState = state.copy()
-                    if (nState.cast(spell, hard)) {
+                    if (nState.cast(spell, hard)) { // the cast function returns false if the cast was too expensive
+                                                    // or already in effect so these are discarded
                         if (nState.manaLoss > best.manaLoss) continue // prune games that spent too much mana already
                         when (nState.win) {
                             0 -> newStates.add(nState)
