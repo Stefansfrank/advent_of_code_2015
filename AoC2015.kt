@@ -1,11 +1,13 @@
 package com.sf.aoc2015
 
-import kotlin.reflect.full.createInstance
+// This class allows me to pick the day I want to work on using a command line parameter without having to
+// have all Days on the machine I am working on (I work on multiple machines)
+// It uses reflection which I had to add to the gradle build script
 
-const val red = "\u001b[31m"
-const val bold = "\u001b[1m"
-const val reset = "\u001b[0m"
-const val green = "\u001b[32m"
+// Each Day class is written in a way that 'solve(file)' can be renamed as 'main()'
+// as long as the 'file' variable within is replaced with the filename of the input
+// (if there is an input file used)
+import kotlin.reflect.full.createInstance
 
 interface Solver {
     fun solve(file: String)

@@ -2,42 +2,6 @@ package com.sf.aoc2015
 
 import kotlin.math.sqrt
 
-// returns all permutations of a list of Int
-fun perm(lst: List<Int>):List<List<Int>> {
-    if (lst.size == 1) return listOf(listOf(lst[0]))
-    val perms = mutableListOf<List<Int>>()
-    for (i in lst) {
-        val mlst = perm(lst.filter { it != i })
-        for (ml in mlst) {
-            perms.add(listOf(i) + ml)
-        }
-    }
-    return perms
-}
-
-fun combinations(list: List<Long>, len: Int):List<List<Long>> {
-    val res = mutableListOf<List<Long>>()
-    if (len == 1) return list.map{ listOf(it) }
-    for (ix in 0..list.size - len) {
-        val sub = combinations(list.drop(ix+1), len-1)
-        sub.forEach { res.add(listOf(list[ix]) + it) }
-    }
-    return res
-}
-
-@JvmName("combinations1")
-fun combinations(list: List<Int>, len: Int):List<List<Int>> {
-    val res = mutableListOf<List<Int>>()
-    if (len == 1) return list.map{ listOf(it) }
-    for (ix in 0..list.size - len) {
-        val sub = combinations(list.drop(ix+1), len-1)
-        sub.forEach { res.add(listOf(list[ix]) + it) }
-    }
-    return res
-}
-
-
-
 // Sieve of Atkins computing all prime numbers up to 'limit'
 fun primes(limit: Int): List<Int> {
 

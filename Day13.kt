@@ -42,23 +42,26 @@ class Day13 : Solver {
 
         val numPeople = 8                                // the number of people
         val family = parse(readTxtFile(file), numPeople) // read and parse the happy factors from the input
-        val perms = perm(List(numPeople){ it })          // compute all permutations of an int array [0..numPeople]
+        val perms = permutations(List(numPeople){ it })  // compute all permutations of an int array [0..numPeople]
 
         var mx = 0
-        for (p in perms) mx = max(mx, (1 until numPeople).fold(family.happy.mp[p[0]][p[numPeople -1]] +
-                                                        family.happy.mp[p[numPeople - 1]][p[0]])
-                { acc, i -> acc + family.happy.mp[p[i]][p[i - 1]] + family.happy.mp[p[i - 1]][p[i]] })
+        for (p in perms)
+            mx = max(mx, (1 until numPeople).fold(family.happy.mp[p[0]][p[numPeople - 1]] +
+                    family.happy.mp[p[numPeople - 1]][p[0]])
+                    { acc:Int, i -> acc + family.happy.mp[p[i]][p[i - 1]] + family.happy.mp[p[i - 1]][p[i]] })
         println("\nThe most happiness achievable with 8 is $red$bold$mx$reset")
 
         val numPeople2 = 9
         val family2 = parse(readTxtFile(file), numPeople2) // the default values of 0 take care of the additional guest
-        val perms2 = perm(List(numPeople2){ it })
+        val perms2 = permutations(List(numPeople2){ it })
 
         mx = 0
         for (p in perms2) mx = max(mx, (1 until numPeople2).fold(family2.happy.mp[p[0]][p[numPeople2 -1]] +
                     family2.happy.mp[p[numPeople2 - 1]][p[0]])
             { acc, i -> acc + family2.happy.mp[p[i]][p[i - 1]] + family2.happy.mp[p[i - 1]][p[i]] })
         println("The most happiness achievable adding myself is $red$bold$mx$reset")
+
+
 
     }
 
