@@ -15,6 +15,29 @@ fun perm(lst: List<Int>):List<List<Int>> {
     return perms
 }
 
+fun combinations(list: List<Long>, len: Int):List<List<Long>> {
+    val res = mutableListOf<List<Long>>()
+    if (len == 1) return list.map{ listOf(it) }
+    for (ix in 0..list.size - len) {
+        val sub = combinations(list.drop(ix+1), len-1)
+        sub.forEach { res.add(listOf(list[ix]) + it) }
+    }
+    return res
+}
+
+@JvmName("combinations1")
+fun combinations(list: List<Int>, len: Int):List<List<Int>> {
+    val res = mutableListOf<List<Int>>()
+    if (len == 1) return list.map{ listOf(it) }
+    for (ix in 0..list.size - len) {
+        val sub = combinations(list.drop(ix+1), len-1)
+        sub.forEach { res.add(listOf(list[ix]) + it) }
+    }
+    return res
+}
+
+
+
 // Sieve of Atkins computing all prime numbers up to 'limit'
 fun primes(limit: Int): List<Int> {
 
